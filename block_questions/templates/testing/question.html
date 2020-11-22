@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n%}
+
+{% block main %}
+    <h1 class="text-center">{{ question.title }}</h1>
+    {% if question %}
+        {% if progress %}
+            <div style="float: right;">
+                Вопрос {{ progress.0|add:1 }} из {{ progress.1 }}
+            </div>
+        {% endif %}
+        <p class="lead">{{ question.description }}</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type=hidden name="question_id" value="{{ question.id }}">
+            <ul class="list-group">
+                {% for answer in form.answers %}
+                    <li class="list-group-item">
+                        {{ answer }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if progress.0|add:1 == progress.1 %}
+                <input type="submit" value={% trans "Подтеврдить" %} class="btn btn-outline-success m-2">
+            {% else %}
+                <input type="submit" value={% trans "Следующий" %} class="btn btn-outline-success m-2" >
+            {% endif %}
+        </form>
+    {% endif %}
+<hr>
+{% endblock %}

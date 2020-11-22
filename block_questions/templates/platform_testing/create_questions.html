@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <form method="post" action="">
+    {% csrf_token %}
+        <br>
+        <label for="id_title" class="sr-only">Заголовок:</label>
+        <input type="text" name="title" maxlength="128" required="" id="id_title" class="form-control"
+               placeholder="Название вопроса">
+        <br>
+        <div class="form-group">
+            <label for="id_description" class="sr-only">Описание:</label>
+            <textarea name="description" class="form-control" rows="7" required=""
+                      id="id_description" placeholder="Описание вопроса"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Подтвердить</button>
+    <br>
+    </form>
+{% endblock %}

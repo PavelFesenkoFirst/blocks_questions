@@ -1,0 +1,18 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    padding-top: 56px;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.activator {
+    cursor: pointer;
+}
+
+.bg-primary {
+    background-color: #1a237e!important;
+}

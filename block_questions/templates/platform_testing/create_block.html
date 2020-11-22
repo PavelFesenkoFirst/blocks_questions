@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+
+<form method="post" action="">
+{% csrf_token %}
+    <div class="pb-2 pt-3">
+        <label for="id_title" class="sr-only">Заголовок:</label>
+        <input type="text" name="title" maxlength="128" required="" id="id_title" class="form-control"
+               placeholder="Имя блока вопросов">
+    </div>
+
+    <div class="pb-2">
+        <label for="id_description" class="sr-only">Description:</label>
+        <textarea name="description" class="form-control" rows="7" required="" id="id_description"
+                  placeholder="Описание блока"></textarea>
+    </div>
+
+    <div class="input-group pb-5">
+        <label for="id_success_text" class="sr-only">Поздравительный текст:</label>
+        <textarea name="success_text" class="form-control" rows="7" required="" id="id_success_text"
+                  placeholder="Введите текст, который будет отображаться после удачного прохождения вопросов"></textarea>
+
+        <label for="id_fail_text" class="sr-only">Провал блока с тестами:</label>
+        <textarea name="fail_text" class="form-control" rows="7" required="" id="id_fail_text"
+                  placeholder="Введите текст, который будет отображаться после неудачного прохождения вопросов"></textarea>
+    </div>
+
+    <div class="pb-2">
+            {% if form.errors %}
+                <p class="alert alert-danger">Значение должно быть максимум 100 или ниже</p>
+            {% endif %}
+        <label for="id_pass_mark">Введите минимальное кол-во очков для прохождения, но не больше 100: </label>
+        <input type="number" name="pass_mark" required="" id="id_pass_mark">
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Подтвердить</button>
+</form>
+<br>
+
+{% endblock %}

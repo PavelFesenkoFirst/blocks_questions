@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    {% if max_score %}
+        <div>
+            <h2>Результат пройденого блока тестов</h2>
+            <p>
+            Вы дали  {{ score }} правильный-(х) ответ-(ов) из {{ max_score }}, это составляет {{ percent }}%
+            от общего числа вопросов.</p>
+            {% if percent >= block_q.pass_mark %}
+                <hr>
+                    <p class="lead">{{ block_q.success_text }}</p>
+                <hr>
+            {% else %}
+                <hr>
+                    <p class="lead">{{ block_q.fail_text }}</p>
+                <hr>
+            {% endif %}
+            <p> Для успешной сдачи данного блока тестов нужно набрать {{ block_q.pass_mark }}% правильных ответов.</p>
+            <p>Результат будет сохранен и перезаписан</p>
+        </div>
+    {% endif %}
+    <hr>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block main %}
+    <div class="container">
+        {% for block in block_list %}
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <h2 class="border-bottom border-dark pb-2 mb-0">{{ block.title }}</h2>
+            <div class="row text-muted pt-3">
+                <p class="media-body pb-3 mb-0 pl-3 small border-dark">
+                    Данный блок содержит {{ block.questions.count }} вопросов
+                </p>
+                <p class="media-body pb-3 mb-0 small border-dark">
+                    {{ block.description|truncatechars:150 }}
+                </p>
+                <a class="btn btn-secondary m-2" href="{{ block.get_absolute_url }}">Подробнее...</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

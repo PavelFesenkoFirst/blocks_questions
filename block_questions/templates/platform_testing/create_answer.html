@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <br>
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="form-TOTAL_FORMS" value="4" id="id_form-TOTAL_FORMS">
+        <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
+        <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS">
+        <input type="hidden" name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS">
+        <p><label for="id_form-0-content" class="sr-only">Ответ:</label>
+            <input type="text" class="form-control form-control-lg" name="form-0-content" maxlength="1000"
+                   id="id_form-0-content" placeholder="Ответ №1" required></p>
+        <p><label for="id_form-0-correct" class="pb-3 mb-0 pl-3 text-muted small border-dark">Правильный ответ:</label>
+            <input checked="checked" type="radio" name="correct" id="id_form-0-correct" value="id_form-0-correct">
+        <p><label for="id_form-1-content" class="sr-only">Ответ:</label>
+            <input type="text" class="form-control form-control-lg" name="form-1-content" maxlength="1000"
+                   id="id_form-1-content" placeholder="Ответ №2" required></p>
+        <p><label for="id_form-1-correct" class="pb-3 mb-0 pl-3 text-muted small border-dark">Правильный ответ:</label>
+            <input type="radio" name="correct" id="id_form-1-correct">
+        <p><label for="id_form-2-content" class="sr-only">Ответ:</label>
+            <input type="text" class="form-control form-control-lg" name="form-2-content" maxlength="1000"
+                   id="id_form-2-content" placeholder="Ответ №3" required></p>
+        <p><label for="id_form-2-correct" class="pb-3 mb-0 pl-3 text-muted small border-dark">Правильный ответ:</label>
+            <input type="radio" name="correct" id="id_form-2-correct">
+        <p><label for="id_form-3-content" class="sr-only">Ответ:</label>
+            <input type="text" class="form-control form-control-lg" name="form-3-content" maxlength="1000"
+                   id="id_form-3-content" placeholder="Ответ №4" required></p>
+        <p><label for="id_form-3-correct" class="pb-3 mb-0 pl-3 text-muted small border-dark">Правильный ответ:</label>
+            <input type="radio" name="correct" id="id_form-3-correct">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Подтвердить</button>
+        </form>
+    <br>
+
+{% endblock %}

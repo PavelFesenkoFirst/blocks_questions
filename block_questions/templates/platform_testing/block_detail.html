@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <br>
+    <h1 class="text-center">{{ bloc.title }}</h1>
+    <br>
+    <h3 class="border-top border-bottom text-justify text-left pt-2 pb-3">{{ bloc.description }}</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h5>Опубликовано в: {{ bloc.date_creation|date }}</h5>
+        <small class="text-muted">Количество людей прошедших этот тест: {{ bloc.count_proh }}</small>
+    </div>
+    {% if user.is_authenticated %}
+        {% if bloc.questions.count > 0 %}
+            <div class="text-center">
+                <a class="btn btn-outline-success m-2" href="{% url 'polls:block_question' pk=bloc.pk %}">
+                    Пройти тесты</a>
+            </div>
+            <br>
+            <br>
+            <h3 class="text-center">Коментарии</h3>
+            {% for foo in  comment %}
+                <h5 class="border-top text-justify text-left pt-3 pb-2">Имя: {{ foo.user }}</h5>
+                <h5 class="text-justify text-left pt-2 pb-2">Сообщение: {{ foo.text }}</h5>
+
+                Добавлено: {{ foo.date_create }}<br>
+            {% endfor %}
+            <br>
+            <h6>Оставить свой комментарий</h6>
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="id_text" class="sr-only">Комментарий:</label>
+                <textarea name="text" class="form-control" rows="3" required="" id="id_text"
+                          placeholder="Ввести текст..."></textarea>
+                <button class="btn btn-secondary m-2" type="submit">Подтвердить</button>
+            </form>
+        {% else %}
+            <br>
+            <br>
+            <h2 style="color: #a41515" class="text-center">В данном блоке еще не созданы вопросы</h2>
+        {% endif %}
+    {% else %}
+        <br>
+        <br>
+        <h2 style="color: #a41515" class="text-center">Для прохождения теста нужно войти в систему или зарегистрироваться</h2>
+    {% endif %}
+
+{% endblock %}

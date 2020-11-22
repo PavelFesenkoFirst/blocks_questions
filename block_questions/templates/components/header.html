@@ -1,0 +1,41 @@
+{% load static %}
+
+<div class="select2-container-default">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h4>Platform</h4>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'polls:index' %}">На главную</a>
+                </li>
+            </ul>
+            <form class="form-inline mt-2 mt-md-0" action="{% url 'polls:search' %}" method="get">
+                <div>
+                    <input id="search" class="form-control mr-sm-2" name="s" type="search"
+                           placeholder="Поиск по тестам" required>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+                </div>
+            </form>
+             <ul class="navbar-nav mr-lg-0">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:profile' %}">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'polls:create_block' %}">Создать свои тесты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "users:logout" %}">Выйти</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "users:login"%}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "users:register" %}">Регистрация</a>
+                </li>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <br>
+    <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'polls:index' %}">Назад</a>
+
+    {% for block in done_block %}
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <h2 class="border-bottom border-dark pb-2 mb-0">{{ block.title|title }}</h2>
+
+            <div class="row text-muted pt-3">
+                <p class="media-body pb-3 mb-0 pl-3 small border-dark">
+                    Данный блок содержит {{ block.questions.count }} вопросов
+                </p>
+
+                {% for aa in block.r_block.all %}
+                    <p class="media-body pb-3 mb-0 small border-dark"> Ваш последний результат - {{ aa.results }}% </p>
+                    <p class="media-body pb-3 mb-0 small border-dark"> Ваше кол-во прохождений - {{ aa.count_try }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

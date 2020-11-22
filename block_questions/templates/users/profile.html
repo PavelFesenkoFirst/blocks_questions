@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <h2 class="font-weight-bold text-center mt-5 mb-5">{{ usersI.first_name }} {{ usersI.last_name }} </h2>
+    <div class="text-center mt-3 mb-3">
+    {% if usersI.image %}
+        <img src="{{ usersI.image.url }}" alt="{{ usersI.title }}" width="300" height="350">
+    {% else %}
+        <img class="activator" src="{% static 'img/no_img.png' %}">
+    {% endif %}
+    <h6 class="font-weight-bold text-center mt-5 mb-5">
+        <a href="{% url 'users:edit_photo'%}">Редактировать</a> Фото
+    </h6>
+    </div>
+    <div class="card-text mb-auto border-top border-bottom">
+        <h4 class="mb-2">Контактная информация: </h4>
+        <h4 class="mb-2">Дата рождения: {{ usersI.birth_date }} </h4>
+        <h4 class="mb-2">О себе: {{ usersI.description }}</h4>
+        <h4 class="mb-2">Дата регистрации на сайте: {{ usersI.date_joined|date }}</h4>
+    </div>
+    <h6 class="font-weight-bold text-center mt-5 mb-5">
+        <a href="{% url 'users:edit_prof' usersI.pk %}">Редактировать</a> Информацию о себе
+    </h6>
+{% endblock main %}

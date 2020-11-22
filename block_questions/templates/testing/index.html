@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block main %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <div class="nav-scroller bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse">
+                <div>
+                <ul>
+                    <li>
+                        <form method="get" action="{% url 'polls:index' %}" name="ordering">
+                            <span>Сортировка:</span>
+                        <div class="row">
+                            <p><button type="button" class="btn btn-outline-success my-2 my-sm-0 mr-5"
+                                           onclick="showOrderUp();">От старых к новым</button>
+                                <p><button type="button" class="btn btn-outline-success my-2 my-sm-0 mr-5"
+                                           onclick="showOrderDown();">От новых к старым</button>
+                            {% if user.is_authenticated %}
+                                <p><button type="button" class="btn btn-outline-success my-2 my-sm-0"
+                                           onclick="showFilter();">Пройденые</button>
+                                </p>{% endif %}</div>
+
+                        </form>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <p><h1 class="text-center">На этой странице отображены блоки тестов, на разную тематику</h1></p>
+    <div id="blocks" class="container">
+    {% for block in block_list %}
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <h2 class="border-bottom border-dark pb-2 mb-0">{{ block.title }}</h2>
+            <div class="row text-muted pt-3">
+                <p class="media-body pb-3 mb-0 pl-3 small border-dark">
+                    Данный блок содержит {{ block.questions.count }} вопросов
+                </p>
+                <p class="media-body pb-3 mb-0 small border-dark">
+                    {{ block.description|truncatechars:150 }}
+                </p>
+                <a class="btn btn-secondary m-2" href="{{ block.get_absolute_url }}">Подробнее...</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock main %}
