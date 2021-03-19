@@ -19,8 +19,6 @@ jobs:
           pip install -r requirements.txt
     - name: Make output folder
       run: mkdir output
-    - name: Generate static pages
-      run: pelican content -o output -s publishconf.py
     - name: Set git config and add changes
       run: |
           git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
