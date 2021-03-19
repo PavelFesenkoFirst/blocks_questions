@@ -1,28 +1,21 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python application
+name: Push content to the user's GitHub pages repository
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
       with:
-        python-version: 3.9
+        python-version: 3.7
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
     - name: Make output folder
       run: mkdir output
@@ -40,7 +33,7 @@ jobs:
       run: |
           COMMIT_MESSAGE="Update pages on $(date +'%Y-%m-%d %H:%M:%S')"
           git diff-index --quiet --cached HEAD -- && echo "No changes!" && exit 0 || echo $COMMIT_MESSAGE
-          # Only if repo have changes
           git commit -m "${COMMIT_MESSAGE}"
           git push https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_ACTOR}/${GITHUB_ACTOR}.github.io.git master
+          curl "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?text=$COMMIT_MESSAGE %0ALook at ${GITHUB_ACTOR}.github.io %0ARepository%3A github.com/${GITHUB_ACTOR}/${GITHUB_ACTOR}.github.io&chat_id=${{ secrets.ADMIN_ID }}"
       working-directory: ./output
