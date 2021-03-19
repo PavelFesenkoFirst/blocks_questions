@@ -1,0 +1,52 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+          pip install -r requirements.txt
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Make output folder
+      run: mkdir output
+    - name: Clone master branch
+      run: git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_ACTOR}/${GITHUB_ACTOR}.github.io.git" --branch master --single-branch ./output
+    - name: Generate static pages
+      run: pelican content -o output -s publishconf.py
+    - name: Set git config and add changes
+      run: |
+          git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git add --all
+      working-directory: ./output
+    - name: Push and send notification
+      run: |
+          COMMIT_MESSAGE="Update pages on $(date +'%Y-%m-%d %H:%M:%S')"
+          git diff-index --quiet --cached HEAD -- && echo "No changes!" && exit 0 || echo $COMMIT_MESSAGE
+          # Only if repo have changes
+          git commit -m "${COMMIT_MESSAGE}"
+          git push https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_ACTOR}/${GITHUB_ACTOR}.github.io.git master
+      working-directory: ./output
