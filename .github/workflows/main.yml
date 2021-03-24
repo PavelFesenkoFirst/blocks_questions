@@ -31,7 +31,7 @@ jobs:
         run: echo Hello, world!
 
       - name: Test some actions
-        run: echo {{secrets.GITHUB_TOKEN}} test actions
+        run: echo test actions
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
