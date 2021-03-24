@@ -29,7 +29,5 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world! |
-         echo {{secrets.GITHUB_TOKEN}} some
-        run: |
-          echo Add other actions to build,
+         echo {{secrets.GITHUB_TOKEN}} someer actions to build,
           echo test, and deploy your project.
